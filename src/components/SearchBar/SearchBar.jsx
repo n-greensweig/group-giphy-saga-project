@@ -19,8 +19,10 @@ function SearchBar() {
         axios.get(BASE_URL, { params })
             .then(response => {
                 if (response.status === 200) {
+                    console.log(endpoint);
                     const data = response.data;
                     setGifUrl(data.data[0].images.original.url);
+                    console.log(data.data[0].images.original.url);
                 } else {
                     console.error(`Error: ${response.status}`);
                 }
@@ -38,6 +40,7 @@ function SearchBar() {
 
     return (
         <div>
+            <h1>{endpoint}</h1>
             {gifUrl && <img src={gifUrl} alt="Random GIF" />} {/* Render the image if gifUrl is not empty */}
         </div>
     )
