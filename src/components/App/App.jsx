@@ -1,3 +1,5 @@
+import SearchBar from "../SearchBar/SearchBar";
+
 function App() {
   return (
     <div>
