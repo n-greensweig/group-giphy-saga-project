@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
 
 const API_KEY = 'wpJF92HnfE6Gz3FjtjYc3yKda5tHyuXn';
 const BASE_URL = 'https://api.giphy.com/v1/gifs/search';
 
 function SearchBar() {
+
+    const [gifUrl, setGifUrl] = useState('');
 
     const endpoint = 'wild';
     const params = {
@@ -18,7 +20,7 @@ function SearchBar() {
             .then(response => {
                 if (response.status === 200) {
                     const data = response.data;
-                    console.log(data);
+                    setGifUrl(data.data[0].images.original.url);
                 } else {
                     console.error(`Error: ${response.status}`);
                 }
@@ -36,7 +38,7 @@ function SearchBar() {
 
     return (
         <div>
-            
+            {gifUrl && <img src={gifUrl} alt="Random GIF" />} {/* Render the image if gifUrl is not empty */}
         </div>
     )
 
