@@ -1,6 +1,6 @@
 import { HashRouter as Router, Route } from 'react-router-dom/cjs/react-router-dom.min.js';
 import Favorites from '../Favorites/Favorites.jsx';
-
+import SearchBar from '../SearchBar/SearchBar.jsx';
 
 function App() {
   return (
