@@ -11,7 +11,7 @@ function App() {
     <>
     <div>
       <h1>Giphy Search!</h1>
-      <SearchBar />
+      {/* <SearchBar /> */}
     </div>
 
   <Router>
