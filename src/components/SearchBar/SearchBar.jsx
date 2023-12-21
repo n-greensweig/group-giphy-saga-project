@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import { Grid, Paper, Card, CardContent, Typography, CardMedia, Button, Container } from "@mui/material"
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import TextField from "@mui/material/TextField";
@@ -10,7 +11,7 @@ const BASE_URL = 'https://api.giphy.com/v1/gifs/search';
 
 function SearchBar() {
 
-    const [gifUrl, setGifUrl] = useState('');
+    const [gifUrl, setGifUrl] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     const params = {
@@ -20,7 +21,9 @@ function SearchBar() {
 
 
     const getGifs = (event) => {
-        console.log(event.target.value)
+        if (searchTerm === '') {
+            //do nothing
+        } else {
         setSearchTerm(event.target.value)
 
 
@@ -28,9 +31,9 @@ function SearchBar() {
             .then(response => {
                 if (response.status === 200) {
                     console.log(searchTerm);
-                    const data = response.data;
-                    setGifUrl(data.data[0].images.original.url);
-                    console.log(data.data[0].images.original.url);
+                    const data = response.data.data;
+                    setGifUrl(data);
+                    console.log(gifUrl);
                 } else {
                     console.error(`Error: ${response.status}`);
                 }
@@ -39,9 +42,7 @@ function SearchBar() {
                 console.error(error);
                 alert('Something went wrong.');
             });
-
-           
-
+        }     
     };
 
 
@@ -70,9 +71,34 @@ function SearchBar() {
                 </IconButton>
         </form>
         </div>
-
+        <br></br>
+        
         <div>
-            {gifUrl && <img src={gifUrl} alt="Random GIF" />} {/* Render the image if gifUrl is not empty */}
+            <Container maxWidth="xl">
+                <Grid container spacing={3}>
+
+                    {gifUrl.map((picture, i) => {
+                        return (
+                            <Grid item xs={12} sm={6} md={3}>
+                                <Paper elevation={6}>
+                                    <Card
+                                        key={i}
+                                        className='picture-card'
+                                        elevation={6}
+                                        sx={{maxWidth:"400px"}}
+                                    >
+                                    <CardMedia
+                                        image={picture.images.fixed_height.url}
+                                        alt={picture.title}
+                                        sx={{maxHeight: "500px", minHeight:"300px"}}
+                                    />
+                                    </Card>
+                                </Paper>
+                            </Grid>    
+                    )})}
+
+                </Grid>
+            </Container>
         </div>
     </>
     )
@@ -80,25 +106,3 @@ function SearchBar() {
 }
 
 export default SearchBar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
